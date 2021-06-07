@@ -1,73 +1,30 @@
 <template>
   <div>
     <header>
-      <div v-if="$auth.loggedIn">
-        <h1>Hola {{ $auth.user.name }}!</h1>
-        <nuxt-link :to="{name: 'logout'}">logout</nuxt-link>
-      </div>
-      <div v-else>
-        <nuxt-link :to="{name: 'login'}">login</nuxt-link>
-        <nuxt-link :to="{name: 'register'}">registrarse</nuxt-link>
-      </div>
-      <nuxt-link :to="{name: 'articles'}">artículos</nuxt-link>
+      <nav class="bg-white py-2">
+        <div class="px-4 mx-auto md:flex md:items-center">
+
+          <div class="flex justify-between items-center">
+            <a href="#" class="font-bold text-xl text-indigo-600">NUXTJS</a>
+            <button class="border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden" id="navbar-toggle">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+
+          <div class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse-logged" v-if="$auth.loggedIn">
+            <nuxt-link :to="{name: 'articles'}" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">artículos</nuxt-link>
+            <nuxt-link :to="{name: 'articles-create'}" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">crear artículo</nuxt-link>
+            <button @click="$auth.logout()" class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Logout</button>
+          </div>
+          <div class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse-unlogged" v-else>
+            <nuxt-link :to="{name: 'articles'}" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">artículos</nuxt-link>
+            <nuxt-link :to="{name: 'articles-create'}" href="#" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">crear artículo</nuxt-link>
+            <nuxt-link :to="{name: 'login'}" class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Login</nuxt-link>
+            <nuxt-link :to="{name: 'register'}" class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-solid border-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1">Signup</nuxt-link>
+          </div>
+        </div>
+      </nav>
     </header>
     <Nuxt />
   </div>
 </template>
-
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
-</style>

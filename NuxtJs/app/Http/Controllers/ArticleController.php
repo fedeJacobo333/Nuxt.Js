@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -10,14 +11,16 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::orderBy('title', 'ASC')->paginate(20);
+        $articles = Article::orderBy('title', 'ASC')->with(['user'])->get();
         return $articles;
     }
 
     public function store(Request $request)
     {
-        //$request->user()->id; agregarle al art el u-id
-        Article::create($this->validateArticle());
+        $attributes = $this->validateArticle();
+        $attributes['date'] = now();
+        $attributes['user_id'] = request('userId');
+        Article::create($attributes);
     }
 
     public function update(Request $request, Article $article)
@@ -39,10 +42,6 @@ class ArticleController extends Controller
     public function validateArticle(): array
     {
         return request()->validate(['title' => 'required|string',
-            'description' => 'required|text'],
-            $messages = [
-                'title.required' => 'Se debe ingresar un título para el artículo',
-                'description.required' => 'Se debe ingresar una descripción para el artículo',
-            ]);
+            'description' => 'required|string']);
     }
 }

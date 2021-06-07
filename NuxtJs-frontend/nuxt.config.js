@@ -1,6 +1,6 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -44,33 +44,34 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://127.0.0.1:8000/',
-    credentials: true
+    baseURL: 'http://127.0.0.1:8000/api',
+    credentials: false
   },
 
   auth: {
     strategies: {
       local: {
+        grant_type: "password",
+        clientId: '2',
+        clientSecret: '0N8xbZfwgdH6iIJ9BV86SvV3zc2vPIV0PBLd7X4w',
         token: {
           property: 'token',
           type: 'Bearer'
         },
         user: {
           property: 'user',
-          clientId: '2',
-          clientSecret: 'vOUDuL70fRCqtzdHU8l5FuMQlVr7SrbIU6foOL5O'
         },
         endpoints: {
           user: {
-            url: 'api/user',
-            method: 'get'
+            url: '/user',
+            method: 'get',
           },
           login: {
-            url: 'api/oauth/token',
-            method: 'get'
+            url: '/login',
+            method: 'post'
           },
           logout: {
-            url: 'api/logout',
+            url: '/logout',
             method: 'get'
           }
         }
